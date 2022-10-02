@@ -39,9 +39,11 @@ class TaskListController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return getConfiguredTaskCell_constraints(for: indexPath)
+        //return getConfiguredTaskCell_constraints(for: indexPath)
+        return getConfiguredTaskCell_stack(for: indexPath)
     }
     
+    //using constraints
     private func getConfiguredTaskCell_constraints(for indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "taskCellConstraints", for: indexPath)
         let taskType = sectionsTypePosition[indexPath.section]
@@ -61,6 +63,28 @@ class TaskListController: UITableViewController {
         } else {
             symbolLabel?.textColor = .lightGray
             textLabel?.textColor = .lightGray
+        }
+        
+        return cell
+    }
+    
+    //using stack
+    private func getConfiguredTaskCell_stack(for indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "taskCellStack", for: indexPath) as! TaskCell
+        let taskType = sectionsTypePosition[indexPath.section]
+        guard let currentTask = tasks[taskType]?[indexPath.row] else {
+            return cell
+        }
+        
+        cell.symbol.text = getSymbolForTask(with: currentTask.status)
+        cell.title.text = currentTask.title
+        
+        if currentTask.status == .planned {
+            cell.symbol.textColor = .black
+            cell.title.textColor = .black
+        } else {
+            cell.symbol.textColor = .lightGray
+            cell.title.textColor = .lightGray
         }
         
         return cell
