@@ -17,11 +17,7 @@ class TaskListController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadTasks()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        navigationItem.leftBarButtonItem = editButtonItem
     }
 
     // MARK: - Table view data source
@@ -129,40 +125,49 @@ class TaskListController: UITableViewController {
         tasks[taskType]![indexPath.row].status = .completed
         tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
     }
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let taskType = sectionsTypePosition[indexPath.section]
+        guard let _ = tasks[taskType]?[indexPath.row] else {
+            return nil
+        }
+        
+        guard tasks[taskType]![indexPath.row].status == .completed else {
+            return nil
+        }
+        
+        let actionSwipeInstance = UIContextualAction(style: .normal, title: "Не выполнена") { [self] _, _, _ in
+            tasks[taskType]![indexPath.row].status = .planned
+            self.tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
+        }
+        
+        return UISwipeActionsConfiguration(actions: [actionSwipeInstance])
     }
-    */
-
-    /*
-    // Override to support editing the table view.
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        let taskType = sectionsTypePosition[indexPath.section]
+        tasks[taskType]?.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+    
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let typeTaskFrom = sectionsTypePosition[sourceIndexPath.section]
+        let typeTaskTo = sectionsTypePosition[destinationIndexPath.section]
+        
+        guard let movedTask = tasks[typeTaskFrom]?[sourceIndexPath.row] else {
+            return
+        }
+        tasks[typeTaskFrom]?.remove(at: sourceIndexPath.row)
+        tasks[typeTaskTo]?.insert(movedTask, at: destinationIndexPath.row)
+        
+        if typeTaskFrom != typeTaskTo {
+            tasks[typeTaskTo]?[destinationIndexPath.row].type = typeTaskTo
+        }
+        
+        tableView.reloadData()
+        
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
+    
     private func loadTasks() {
         sectionsTypePosition.forEach { taskType in
             tasks[taskType] = []
@@ -179,14 +184,5 @@ class TaskListController: UITableViewController {
             }
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
