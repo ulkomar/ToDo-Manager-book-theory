@@ -16,6 +16,10 @@
 		8062EC8728E8C69400388D1C /* TaskListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8062EC8628E8C69400388D1C /* TaskListController.swift */; };
 		8062EC8A28E8C75900388D1C /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8062EC8928E8C75900388D1C /* Task.swift */; };
 		8062EC8C28E8CBA800388D1C /* TaskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8062EC8B28E8CBA800388D1C /* TaskStorage.swift */; };
+		80DA4FDC28F4BC7A00499CAA /* TaskEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DA4FDB28F4BC7A00499CAA /* TaskEditController.swift */; };
+		80DA4FDE28F5B77500499CAA /* TaskTypeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DA4FDD28F5B77500499CAA /* TaskTypeController.swift */; };
+		80DA4FE128F5B8D700499CAA /* TaskTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DA4FDF28F5B8D700499CAA /* TaskTypeCell.swift */; };
+		80DA4FE228F5B8D700499CAA /* TaskTypeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80DA4FE028F5B8D700499CAA /* TaskTypeCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +34,10 @@
 		8062EC8628E8C69400388D1C /* TaskListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListController.swift; sourceTree = "<group>"; };
 		8062EC8928E8C75900388D1C /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		8062EC8B28E8CBA800388D1C /* TaskStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskStorage.swift; sourceTree = "<group>"; };
+		80DA4FDB28F4BC7A00499CAA /* TaskEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskEditController.swift; sourceTree = "<group>"; };
+		80DA4FDD28F5B77500499CAA /* TaskTypeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTypeController.swift; sourceTree = "<group>"; };
+		80DA4FDF28F5B8D700499CAA /* TaskTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTypeCell.swift; sourceTree = "<group>"; };
+		80DA4FE028F5B8D700499CAA /* TaskTypeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TaskTypeCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +63,8 @@
 			isa = PBXGroup;
 			children = (
 				80165AE128E99EF8008E7D8F /* TaskCell.swift */,
+				80DA4FDF28F5B8D700499CAA /* TaskTypeCell.swift */,
+				80DA4FE028F5B8D700499CAA /* TaskTypeCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -81,7 +91,9 @@
 				8062EC8828E8C74E00388D1C /* Model */,
 				80165ADD28E99E19008E7D8F /* View */,
 				8062EC7028E8C46B00388D1C /* AppDelegate.swift */,
+				80DA4FDD28F5B77500499CAA /* TaskTypeController.swift */,
 				8062EC7228E8C46B00388D1C /* SceneDelegate.swift */,
+				80DA4FDB28F4BC7A00499CAA /* TaskEditController.swift */,
 				8062EC8628E8C69400388D1C /* TaskListController.swift */,
 				8062EC7628E8C46B00388D1C /* Main.storyboard */,
 				8062EC7928E8C46D00388D1C /* Assets.xcassets */,
@@ -160,6 +172,7 @@
 			files = (
 				8062EC7D28E8C46D00388D1C /* LaunchScreen.storyboard in Resources */,
 				8062EC7A28E8C46D00388D1C /* Assets.xcassets in Resources */,
+				80DA4FE228F5B8D700499CAA /* TaskTypeCell.xib in Resources */,
 				8062EC7828E8C46B00388D1C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -175,8 +188,11 @@
 				8062EC7128E8C46B00388D1C /* AppDelegate.swift in Sources */,
 				8062EC7328E8C46B00388D1C /* SceneDelegate.swift in Sources */,
 				8062EC8C28E8CBA800388D1C /* TaskStorage.swift in Sources */,
+				80DA4FDE28F5B77500499CAA /* TaskTypeController.swift in Sources */,
 				80165AE228E99EF8008E7D8F /* TaskCell.swift in Sources */,
 				8062EC8728E8C69400388D1C /* TaskListController.swift in Sources */,
+				80DA4FDC28F4BC7A00499CAA /* TaskEditController.swift in Sources */,
+				80DA4FE128F5B8D700499CAA /* TaskTypeCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

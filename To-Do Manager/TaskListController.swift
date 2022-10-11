@@ -39,31 +39,6 @@ class TaskListController: UITableViewController {
         return getConfiguredTaskCell_stack(for: indexPath)
     }
     
-    //using constraints
-    private func getConfiguredTaskCell_constraints(for indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "taskCellConstraints", for: indexPath)
-        let taskType = sectionsTypePosition[indexPath.section]
-        guard let currentTask = tasks[taskType]?[indexPath.row] else {
-            return cell
-        }
-        
-        let symbolLabel = cell.viewWithTag(1) as? UILabel
-        let textLabel = cell.viewWithTag(2) as? UILabel
-        
-        symbolLabel?.text = getSymbolForTask(with: currentTask.status)
-        textLabel?.text = currentTask.title
-        
-        if currentTask.status == .planned {
-            symbolLabel?.textColor = .black
-            textLabel?.textColor = .black
-        } else {
-            symbolLabel?.textColor = .lightGray
-            textLabel?.textColor = .lightGray
-        }
-        
-        return cell
-    }
-    
     //using stack
     private func getConfiguredTaskCell_stack(for indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "taskCellStack", for: indexPath) as! TaskCell
