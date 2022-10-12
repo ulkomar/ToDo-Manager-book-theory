@@ -11,6 +11,7 @@ class TaskEditController: UITableViewController {
     
     @IBOutlet var taskTitle: UITextField!
     @IBOutlet var taskTypeLabel: UILabel!
+    @IBOutlet var taskStatusSwitch: UISwitch!
     
     var taskText: String = ""
     var taskType: TaskPriority = .normal
@@ -26,6 +27,29 @@ class TaskEditController: UITableViewController {
         super.viewDidLoad()
         self.taskTitle.text = taskText
         taskTypeLabel?.text = taskTitles[taskType]
+        if taskStatus == .completed {
+            taskStatusSwitch.isOn = true
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toTaskTypeScreen" {
+            let destination = segue.destination as! TaskTypeController
+            destination.selectedType = taskType
+            
+            destination.doAfterTypeSelected = { [unowned self] selectedType in
+                taskType = selectedType
+                taskTypeLabel?.text = taskTitles[taskType]
+            }
+        }
+    }
+    
+    @IBAction func saveTask(_ sender: UIButton) {
+        let title = taskTitle?.text ?? ""
+        let type = taskType
+        let status: TaskStatus = taskStatusSwitch.isOn ? .completed : .planned
+        doAfterEdit?(title, type, status)
+        navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Table view data source
@@ -39,4 +63,6 @@ class TaskEditController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return 3
     }
+    
+    
 }

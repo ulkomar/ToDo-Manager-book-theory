@@ -8,6 +8,8 @@
 import UIKit
 
 class TaskTypeController: UITableViewController {
+    
+    var doAfterTypeSelected: ((TaskPriority) -> Void)?
 
     typealias TypeCellDescription = (type: TaskPriority, title: String, description: String)
     private var taskTypesInformation: [TypeCellDescription] = [
@@ -49,5 +51,11 @@ class TaskTypeController: UITableViewController {
         }
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedType = taskTypesInformation[indexPath.row].type
+        doAfterTypeSelected?(selectedType)
+        navigationController?.popViewController(animated: true)
     }
 }
