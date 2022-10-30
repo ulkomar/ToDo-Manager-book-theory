@@ -10,7 +10,15 @@ import UIKit
 class TaskListController: UITableViewController {
 
     var tasksStorage: TasksStorageProtocol = TasksStorage()
-    var tasks: [TaskPriority: [TaskProtocol]] = [:]
+    var tasks: [TaskPriority: [TaskProtocol]] = [:] {
+        didSet {
+            var savingArray: [TaskProtocol] = []
+            tasks.forEach { _, value in
+                savingArray += value
+            }
+            tasksStorage.saveTasks(savingArray)
+        }
+    }
     var sectionsTypePosition: [TaskPriority] = [.important, .normal]
     var taskStatusPosition: [TaskStatus] = [.planned, .completed]
     
@@ -127,7 +135,32 @@ class TaskListController: UITableViewController {
             self.tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
         }
         
-        return UISwipeActionsConfiguration(actions: [actionSwipeInstance])
+        let actionEditInstance = UIContextualAction(style: .normal, title: "Change") {_, _, _ in
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let screen = storyboard.instantiateViewController(withIdentifier: "TaskEditController") as! TaskEditController
+            screen.taskText = self.tasks[taskType]![indexPath.row].title
+            screen.taskType = self.tasks[taskType]![indexPath.row].type
+            screen.taskStatus = self.tasks[taskType]![indexPath.row].status
+            
+            screen.doAfterEdit = { [unowned self] title, type, status in
+                let editedTask = Task(title: title, type: type, status: status)
+                tasks[taskType]![indexPath.row] = editedTask
+                tableView.reloadData()
+            }
+            
+            self.navigationController?.pushViewController(screen, animated: true)
+        }
+        
+        actionEditInstance.backgroundColor = .darkGray
+        let actionsConfig: UISwipeActionsConfiguration
+        if tasks[taskType]![indexPath.row].status == .completed {
+            actionsConfig = UISwipeActionsConfiguration(actions: [actionSwipeInstance, actionEditInstance])
+        } else {
+            actionsConfig = UISwipeActionsConfiguration(actions: [actionSwipeInstance])
+        }
+        
+        
+        return actionsConfig
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
